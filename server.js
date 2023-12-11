@@ -49,5 +49,5 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/colors_behavior.routes.js")(app);
-require("./app/background/kafka_external_process.js")(io);
 require("./app/background/kafka_internal_process.js")();
+require("./app/background/kafka_external_process.js")(io);
