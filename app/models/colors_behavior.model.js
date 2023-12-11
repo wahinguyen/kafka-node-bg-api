@@ -32,14 +32,17 @@ ColorsBehavior.updateById = async (id, body, result) => {
   );
 
   const { colors_behavior } = body;
-  let queryString = "";
+  let totalColor = 0;
   if (colors_behavior == "red") {
-    queryString = `${colors_behavior} = ${colorPicker[0].red++}`;
+    totalColor = parseInt(colorPicker[0].red) + 1;
   } else if (colors_behavior == "blue") {
-    queryString = `${colors_behavior} = ${colorPicker[0].blue++}`;
+    totalColor = parseInt(colorPicker[0].blue) + 1;
   } else if (colors_behavior == "yellow") {
-    queryString = `${colors_behavior} = ${colorPicker[0].yellow++}`;
+    totalColor = parseInt(colorPicker[0].yellow) + 1;
   }
+
+  let queryString = "";
+  queryString = `${colors_behavior} = ${totalColor}`;
 
   sql.query(
     `UPDATE colors_behavior SET ${queryString} WHERE id = ${id}`,
