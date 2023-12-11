@@ -3,13 +3,12 @@ module.exports = () => {
 
   const kafka = new Kafka({
     clientId: "consumer-3",
-    brokers: ["pkc-312o0.ap-southeast-1.aws.confluent.cloud:9092"],
+    brokers: [process.env.KAFKA_BOOTSTRAP_SERVER],
     ssl: true,
     sasl: {
       mechanism: "plain",
-      username: "VJWPEBI4B4MKYKVB",
-      password:
-        "+MBjyWPtXKlEvwvlQTZY690SjXnHPhv5zOkP5UZqZ8U4ioQ+U7K03vpN32USSOJv",
+      username: process.env.KAFKA_USERNAME,
+      password: process.env.KAFKA_PASSWORD,
     },
   });
   const consumer = kafka.consumer({ groupId: "group-3" });
