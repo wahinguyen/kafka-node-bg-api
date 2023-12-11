@@ -38,10 +38,10 @@ app.listen(API_PORT, () => {
   console.log(`Server is running on port ${API_PORT}.`);
 });
 
-// const SOCKET_PORT = process.env.SOCKET_PORT;
-// server.listen(SOCKET_PORT, () => {
-//   console.log("socket server listening on *:" + SOCKET_PORT);
-// });
+const SOCKET_PORT = process.env.SOCKET_PORT;
+server.listen(SOCKET_PORT, () => {
+  console.log("socket server listening on *:" + SOCKET_PORT);
+});
 
 // simple route
 app.get("/", (req, res) => {
