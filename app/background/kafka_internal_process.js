@@ -2,7 +2,7 @@ module.exports = () => {
   const { Kafka } = require("kafkajs");
 
   const kafka = new Kafka({
-    clientId: "consumer-1",
+    clientId: "consumer-3",
     brokers: ["pkc-312o0.ap-southeast-1.aws.confluent.cloud:9092"],
     ssl: true,
     sasl: {
@@ -12,7 +12,7 @@ module.exports = () => {
         "+MBjyWPtXKlEvwvlQTZY690SjXnHPhv5zOkP5UZqZ8U4ioQ+U7K03vpN32USSOJv",
     },
   });
-  const consumer = kafka.consumer({ groupId: "group-2" });
+  const consumer = kafka.consumer({ groupId: "group-3" });
   const producer = kafka.producer();
 
   // Kafka message handling

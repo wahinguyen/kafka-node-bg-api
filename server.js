@@ -5,16 +5,14 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const cors = require("cors");
 require("dotenv").config();
-
-var corsOptions = {
-  origin: "*",
-};
-
 const io = new Server(server, {
   cors: {
     origin: "*",
   },
 });
+var corsOptions = {
+  origin: "*",
+};
 
 app.use(cors(corsOptions));
 
@@ -34,6 +32,17 @@ io.on("connection", (socket) => {
   });
 });
 
+// set port, listen for requests
+const API_PORT = process.env.API_PORT;
+app.listen(API_PORT, () => {
+  console.log(`Server is running on port ${API_PORT}.`);
+});
+
+const SOCKET_PORT = process.env.SOCKET_PORT;
+server.listen(SOCKET_PORT, () => {
+  console.log("socket server listening on *:" + SOCKET_PORT);
+});
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to kafka node application." });
@@ -42,9 +51,3 @@ app.get("/", (req, res) => {
 require("./app/routes/colors_behavior.routes.js")(app);
 require("./app/background/kafka_external_process.js")(io);
 require("./app/background/kafka_internal_process.js")();
-
-// set port, listen for requests
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
