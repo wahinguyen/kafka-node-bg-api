@@ -26,10 +26,24 @@ ColorsBehavior.findById = (id, result) => {
   });
 };
 
-ColorsBehavior.updateById = (id, colors_behavior, result) => {
+ColorsBehavior.updateById = async (id, body, result) => {
+  const colorPicker = await query(
+    `SELECT * FROM colors_behavior WHERE id = ${id}`
+  );
+
+  const { colors_behavior } = body;
+  let queryString = "";
+  if (colors_behavior == "red") {
+    queryString = `${colors_behavior} = ${colorPicker[0].red++}`;
+  } else if (colors_behavior == "blue") {
+    queryString = `${colors_behavior} = ${colorPicker[0].blue++}`;
+  } else if (colors_behavior == "yellow") {
+    queryString = `${colors_behavior} = ${colorPicker[0].yellow++}`;
+  }
+
   sql.query(
-    `UPDATE colors_behavior SET red = ${colors_behavior.red}, blue = ${colors_behavior.blue}, yellow = ${colors_behavior.yellow} WHERE id = ${id}`,
-    [colors_behavior.red, colors_behavior.blue, colors_behavior.yellow, id],
+    `UPDATE colors_behavior SET ${queryString} WHERE id = ${id}`,
+    [id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -44,9 +58,21 @@ ColorsBehavior.updateById = (id, colors_behavior, result) => {
       }
 
       //console.log("updated data: ", { id: id, ...colors_behavior });
-      result(null, { id: id, ...colors_behavior });
+      result(null, { id: id });
     }
   );
 };
+
+function query(values) {
+  return new Promise((resolve, reject) => {
+    sql.query(values, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
 
 module.exports = ColorsBehavior;

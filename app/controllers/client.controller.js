@@ -6,11 +6,11 @@ exports.findOne = (req, res) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Tutorial with id ${req.params.id}.`,
+          message: `Not found with id ${req.params.id}.`,
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id " + req.params.id,
+          message: "Error retrieving with id " + req.params.id,
         });
       }
     } else res.send(data);
@@ -26,21 +26,17 @@ exports.update = (req, res) => {
     });
   }
 
-  ColorsBehavior.updateById(
-    req.params.id,
-    new ColorsBehavior(req.body),
-    (err, data) => {
-      if (err) {
-        if (err.kind === "not_found") {
-          res.status(404).send({
-            message: `Not found Tutorial with id ${req.params.id}.`,
-          });
-        } else {
-          res.status(500).send({
-            message: "Error updating Tutorial with id " + req.params.id,
-          });
-        }
-      } else res.send(data);
-    }
-  );
+  ColorsBehavior.updateById(req.params.id, req.body, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found with id ${req.params.id}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error updating with id " + req.params.id,
+        });
+      }
+    } else res.send(data);
+  });
 };
